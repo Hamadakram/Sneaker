@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.irozon.sneakersample.MainActivity">
+
+    <Button
+        android:id="@+id/btShowError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Error" />
+
+    <Button
+        android:id="@+id/btShowSuccess"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Success" />
+
+    <Button
+        android:id="@+id/btShowWarning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Warning" />
+
+</LinearLayout>
