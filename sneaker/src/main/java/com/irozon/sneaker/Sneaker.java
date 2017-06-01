@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
@@ -39,6 +41,7 @@ public class Sneaker implements View.OnClickListener {
     private static WeakReference<Activity> contextWeakReference;
     private static boolean mIsCircular = false;
     private static OnSneakerClickListener mListener = null;
+    private static Typeface mTypeFace = null;
 
     /**
      * Constructor
@@ -98,6 +101,7 @@ public class Sneaker implements View.OnClickListener {
         mHeight = DEFAULT_VALUE;
         mIsCircular = false;
         mListener = null;
+        mTypeFace = null;
     }
 
     /**
@@ -281,6 +285,16 @@ public class Sneaker implements View.OnClickListener {
     }
 
     /**
+     * Set font for title and message
+     * @param typeface
+     * @return
+     */
+    public Sneaker setTypeface(Typeface typeface) {
+        mTypeFace = typeface;
+        return this;
+    }
+
+    /**
      * Shows sneaker with custom color
      *
      * @param backgroundColor Color resource for sneaker background color
@@ -357,7 +371,9 @@ public class Sneaker implements View.OnClickListener {
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER_VERTICAL);
         layout.setPadding(46, getStatusBarHeight(), 46, 0);
-        layout.setElevation(6);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layout.setElevation(6);
+        }
 
         // Background color
         layout.setBackgroundColor(mBackgroundColor);
@@ -407,6 +423,11 @@ public class Sneaker implements View.OnClickListener {
                 tvTitle.setPadding(46, 0, 26, 0); // No top padding if there is no message
             if (mTitleColor != DEFAULT_VALUE)
                 tvTitle.setTextColor(mTitleColor);
+
+            // typeface
+            if (mTypeFace != null)
+                tvTitle.setTypeface(mTypeFace);
+
             tvTitle.setTextSize(14);
             tvTitle.setText(mTitle);
             tvTitle.setClickable(false);
@@ -423,6 +444,11 @@ public class Sneaker implements View.OnClickListener {
                 tvMessage.setPadding(46, 0, 26, 0); // No bottom padding if there is no title
             if (mMessageColor != DEFAULT_VALUE)
                 tvMessage.setTextColor(mMessageColor);
+
+            // typeface
+            if (mTypeFace != null)
+                tvMessage.setTypeface(mTypeFace);
+
             tvMessage.setTextSize(12);
             tvMessage.setText(mMessage);
             tvMessage.setClickable(false);

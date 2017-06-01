@@ -1,6 +1,7 @@
 package com.irozon.sneakersample;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Sneaker.with(this)
                         .setTitle("Error!!")
                         .setMessage("This is the error message")
+                        .setTypeface(Typeface.createFromAsset(this.getAssets(), "font/" + "Slabo27px-Regular.ttf"))
                         .sneakError();
                 break;
             case R.id.btShowSuccess:

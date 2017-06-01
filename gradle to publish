@@ -1,0 +1,61 @@
+apply plugin: 'com.android.library'
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'sneaker'   // Has to be same as your library module name
+
+    publishedGroupId = 'com.irozon.sneaker'
+    libraryName = 'sneaker'
+    artifact = 'sneaker'     // Has to be same as your library module name
+
+    libraryDescription = 'A lightweight Android library for customizable alerts'
+
+    // Your github repo link
+    siteUrl = 'https://github.com/Hamadakram/Sneaker'
+    gitUrl = 'https://github.com/Hamadakram/Sneaker.git'
+    githubRepository= 'hamadakram/Sneaker'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'hamadakram'
+    developerName = 'Hammad Akram'
+    developerEmail = 'hamadakram91@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+}
+apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/bintrayv1.gradle'
