@@ -5,14 +5,14 @@ A lightweight Android library for customizable alerts
 ## Download
 Grab via Gradle:
 ```java
-compile 'com.irozon.sneaker:sneaker:1.0.0'
+compile 'com.irozon.sneaker:sneaker:1.0.1'
 ```
 Or Maven:
 ```java
 <dependency>
   <groupId>com.irozon.sneaker</groupId>
   <artifactId>sneaker</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ``` 
@@ -26,6 +26,7 @@ Sneaker.with(this)
        .autoHide(true) // Auto hide Sneaker view
        .setHeight(ViewGroup.LayoutParams.WRAP_CONTENT) // Height of the Sneaker layout
        .setIcon(R.drawable.ic_no_connection, R.color.white, false) // Icon, icon tint color and circular icon view
+       .setTypeface(Typeface.createFromAsset(this.getAssets(), "font/" + fontName)); // Custom font for title and message
        .setOnSneakerClickListener(this) // Click listener for Sneaker
        .sneak(R.color.colorAccent); // Sneak with background color
 ```
@@ -50,6 +51,15 @@ Sneaker.with(this)
         .setMessage("This is the warning message")
         .sneakWarning();
 ```
+## Change Log
+
+### [1.0.1] - 2017-06-02
+#### Added
+- Custom font support.
+
+#### Fixed
+- Bug fixed that was causing crash on pre-Lollipop devices.
+
 ## Authors
 
 * **Hammad Akram** - (https://github.com/hamadakram)
