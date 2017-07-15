@@ -32,6 +32,7 @@ public class Sneaker implements View.OnClickListener {
     private static int mBackgroundColor = DEFAULT_VALUE;
     private static int mHeight = DEFAULT_VALUE;
     private static int mIconColorFilterColor = DEFAULT_VALUE;
+    private static int mIconSize = 24;
     private static String mTitle = "";
     private static String mMessage = "";
     private static int mTitleColor = DEFAULT_VALUE;
@@ -96,6 +97,7 @@ public class Sneaker implements View.OnClickListener {
         mIcon = DEFAULT_VALUE;
         mIconDrawable = null;
         mIconColorFilterColor = DEFAULT_VALUE;
+        mIconSize = 24;
         mBackgroundColor = DEFAULT_VALUE;
         mAutoHide = true;
         mTitleColor = DEFAULT_VALUE;
@@ -307,6 +309,16 @@ public class Sneaker implements View.OnClickListener {
     }
 
     /**
+     * Sets the size of the icon.
+     *
+     * @param size New icon size.
+     */
+    public Sneaker setIconSize(int size) {
+        mIconSize = size;
+        return this;
+    }
+
+    /**
      * Disable/Enable auto hiding sneaker
      *
      * @param autoHide
@@ -450,7 +462,7 @@ public class Sneaker implements View.OnClickListener {
         if (mIcon != DEFAULT_VALUE || mIconDrawable != null) {
             if (!mIsCircular) {
                 AppCompatImageView ivIcon = new AppCompatImageView(getContext());
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(24), convertToDp(24));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(mIconSize), convertToDp(mIconSize));
                 ivIcon.setLayoutParams(lp);
 
                 if(mIcon == DEFAULT_VALUE) {
@@ -465,7 +477,7 @@ public class Sneaker implements View.OnClickListener {
                 layout.addView(ivIcon);
             } else {
                 RoundedImageView ivIcon = new RoundedImageView(getContext());
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(24), convertToDp(24));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(mIconSize), convertToDp(mIconSize));
                 ivIcon.setLayoutParams(lp);
 
                 if(mIcon == DEFAULT_VALUE) {
