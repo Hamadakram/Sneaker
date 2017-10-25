@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,9 +28,11 @@ public class Sneaker implements View.OnClickListener {
 
     private static final int DEFAULT_VALUE = -100000;
     private static int mIcon = DEFAULT_VALUE;
+    private static Drawable mIconDrawable = null;
     private static int mBackgroundColor = DEFAULT_VALUE;
     private static int mHeight = DEFAULT_VALUE;
     private static int mIconColorFilterColor = DEFAULT_VALUE;
+    private static int mIconSize = 24;
     private static String mTitle = "";
     private static String mMessage = "";
     private static int mTitleColor = DEFAULT_VALUE;
@@ -93,7 +95,9 @@ public class Sneaker implements View.OnClickListener {
     private static void setDefault() {
         mTitle = "";
         mIcon = DEFAULT_VALUE;
+        mIconDrawable = null;
         mIconColorFilterColor = DEFAULT_VALUE;
+        mIconSize = 24;
         mBackgroundColor = DEFAULT_VALUE;
         mAutoHide = true;
         mTitleColor = DEFAULT_VALUE;
@@ -189,7 +193,20 @@ public class Sneaker implements View.OnClickListener {
      * @return
      */
     public Sneaker setIcon(int icon) {
+        mIconDrawable = null;
         mIcon = icon;
+        return this;
+    }
+
+    /**
+     * Sets the icon to sneaker
+     *
+     * @param icon Icon drawable for sneaker
+     * @return
+     */
+    public Sneaker setIcon(Drawable icon) {
+        mIcon = DEFAULT_VALUE;
+        mIconDrawable = icon;
         return this;
     }
 
@@ -201,13 +218,42 @@ public class Sneaker implements View.OnClickListener {
      * @return
      */
     public Sneaker setIcon(int icon, boolean isCircular) {
+        mIconDrawable = null;
         mIcon = icon;
         mIsCircular = isCircular;
         return this;
     }
 
+    /**
+     * Sets the icon to sneaker with circular option
+     *
+     * @param icon
+     * @param isCircular If icon is round or not
+     * @return
+     */
+    public Sneaker setIcon(Drawable icon, boolean isCircular) {
+        mIcon = DEFAULT_VALUE;
+        mIconDrawable = icon;
+        mIsCircular = isCircular;
+        return this;
+    }
+
     public Sneaker setIcon(int icon, int tintColor) {
+        mIconDrawable = null;
         mIcon = icon;
+        if (getContext() != null) {
+            try {
+                mIconColorFilterColor = ContextCompat.getColor(getContext(), tintColor);
+            } catch (Exception e) {
+                mIconColorFilterColor = tintColor;
+            }
+        }
+        return this;
+    }
+
+    public Sneaker setIcon(Drawable icon, int tintColor) {
+        mIcon = DEFAULT_VALUE;
+        mIconDrawable = icon;
         if (getContext() != null) {
             try {
                 mIconColorFilterColor = ContextCompat.getColor(getContext(), tintColor);
@@ -227,6 +273,7 @@ public class Sneaker implements View.OnClickListener {
      * @return
      */
     public Sneaker setIcon(int icon, int tintColor, boolean isCircular) {
+        mIconDrawable = null;
         mIcon = icon;
         mIsCircular = isCircular;
         if (getContext() != null) {
@@ -236,6 +283,38 @@ public class Sneaker implements View.OnClickListener {
                 mIconColorFilterColor = tintColor;
             }
         }
+        return this;
+    }
+
+    /**
+     * Sets the icon to sneaker with circular option and icon tint
+     *
+     * @param icon
+     * @param tintColor  Icon tint color
+     * @param isCircular If icon is round or not
+     * @return
+     */
+    public Sneaker setIcon(Drawable icon, int tintColor, boolean isCircular) {
+        mIcon = DEFAULT_VALUE;
+        mIconDrawable = icon;
+        mIsCircular = isCircular;
+        if (getContext() != null) {
+            try {
+                mIconColorFilterColor = ContextCompat.getColor(getContext(), tintColor);
+            } catch (Exception e) {
+                mIconColorFilterColor = tintColor;
+            }
+        }
+        return this;
+    }
+
+    /**
+     * Sets the size of the icon.
+     *
+     * @param size New icon size.
+     */
+    public Sneaker setIconSize(int size) {
+        mIconSize = size;
         return this;
     }
 
@@ -380,13 +459,17 @@ public class Sneaker implements View.OnClickListener {
 
         // Icon
         // If icon is set
-        if (mIcon != DEFAULT_VALUE) {
+        if (mIcon != DEFAULT_VALUE || mIconDrawable != null) {
             if (!mIsCircular) {
                 AppCompatImageView ivIcon = new AppCompatImageView(getContext());
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(24), convertToDp(24));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(mIconSize), convertToDp(mIconSize));
                 ivIcon.setLayoutParams(lp);
 
-                ivIcon.setImageResource(mIcon);
+                if(mIcon == DEFAULT_VALUE) {
+                    ivIcon.setImageDrawable(mIconDrawable);
+                } else {
+                    ivIcon.setImageResource(mIcon);
+                }
                 ivIcon.setClickable(false);
                 if (mIconColorFilterColor != DEFAULT_VALUE) {
                     ivIcon.setColorFilter(mIconColorFilterColor);
@@ -394,10 +477,14 @@ public class Sneaker implements View.OnClickListener {
                 layout.addView(ivIcon);
             } else {
                 RoundedImageView ivIcon = new RoundedImageView(getContext());
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(24), convertToDp(24));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(mIconSize), convertToDp(mIconSize));
                 ivIcon.setLayoutParams(lp);
 
-                ivIcon.setImageResource(mIcon);
+                if(mIcon == DEFAULT_VALUE) {
+                    ivIcon.setImageDrawable(mIconDrawable);
+                } else {
+                    ivIcon.setImageResource(mIcon);
+                }
                 ivIcon.setClickable(false);
                 if (mIconColorFilterColor != DEFAULT_VALUE) {
                     ivIcon.setColorFilter(mIconColorFilterColor);
