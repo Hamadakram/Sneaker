@@ -43,6 +43,7 @@ public class Sneaker implements View.OnClickListener {
     private static WeakReference<Activity> contextWeakReference;
     private static boolean mIsCircular = false;
     private static OnSneakerClickListener mListener = null;
+    private static OnSneakerDismissListener mDismissListener = null;
     private static Typeface mTypeFace = null;
 
     /**
@@ -72,6 +73,9 @@ public class Sneaker implements View.OnClickListener {
     public static void hide() {
         if (getLayout() != null) {
             getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
+            if (mDismissListener != null) {
+                mDismissListener.onDismiss();
+            }
             getActivityDecorView().removeView(getLayout());
         }
     }
@@ -364,6 +368,15 @@ public class Sneaker implements View.OnClickListener {
     }
 
     /**
+     * Sets the dismiss listener to sneaker
+     *
+     */
+     public Sneaker setOnSneakerDismissListener(OnSneakerDismissListener listener) {
+         mDismissListener = listener;
+         return this;
+     }
+
+    /**
      * Set font for title and message
      * @param typeface
      * @return
@@ -621,5 +634,9 @@ public class Sneaker implements View.OnClickListener {
 
     public interface OnSneakerClickListener {
         void onSneakerClick(View view);
+    }
+
+    public interface OnSneakerDismissListener {
+        void onDismiss();
     }
 }
