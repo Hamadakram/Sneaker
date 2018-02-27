@@ -1,18 +1,18 @@
 # Sneaker
 A lightweight Android library for customizable alerts
 
-![](https://github.com/Hamadakram/Sneaker/blob/master/app/Sneaker.png?raw=true)
+![](https://github.com/Hamadakram/Sneaker/blob/master/art/Sneaker.png?raw=true)
 ## Download
 Grab via Gradle:
 ```java
-compile 'com.irozon.sneaker:sneaker:1.0.1'
+compile 'com.irozon.sneaker:sneaker:1.0.2'
 ```
 Or Maven:
 ```java
 <dependency>
   <groupId>com.irozon.sneaker</groupId>
   <artifactId>sneaker</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <type>pom</type>
 </dependency>
 ``` 
@@ -28,6 +28,8 @@ Sneaker.with(this)
        .setIcon(R.drawable.ic_no_connection, R.color.white, false) // Icon, icon tint color and circular icon view
        .setTypeface(Typeface.createFromAsset(this.getAssets(), "font/" + fontName)); // Custom font for title and message
        .setOnSneakerClickListener(this) // Click listener for Sneaker
+       .setOnSneakerDismissListener(this) // Dismiss listener for Sneaker. - Version 1.0.2
+       .setCornerRadius(radius, margin) // Radius and margin for round corner Sneaker. - Version 1.0.2
        .sneak(R.color.colorAccent); // Sneak with background color
 ```
 #### Error:
@@ -60,13 +62,19 @@ Sneaker.with(this)
 #### Fixed
 - Bug fixed that was causing crash on pre-Lollipop devices.
 
+### [1.0.2] - 2018-02-26
+#### Added
+- Round corners sneaker support
+- Sneaker dismiss listener
+- Icon from Drawable support
+
 ## Authors
 
 * **Hammad Akram** - (https://github.com/hamadakram)
 
 ## Licence
 ```
-Copyright 2017 Irozon, Inc.
+Copyright 2018 Irozon, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
