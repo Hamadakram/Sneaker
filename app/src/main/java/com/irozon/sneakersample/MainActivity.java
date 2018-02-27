@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Sneaker.with(this)
                         .setTitle("Success!!")
                         .setMessage("This is the success message")
+                        .setCornerRadius(5, 7)
                         .sneakSuccess();
                 break;
             case R.id.btShowWarning:

@@ -1,4 +1,4 @@
-package com.irozon.sneaker;
+package com.irozon.sneaker.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;

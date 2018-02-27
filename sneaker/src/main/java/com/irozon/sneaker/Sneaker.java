@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,10 @@ import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.irozon.sneaker.interfaces.OnSneakerClickListener;
+import com.irozon.sneaker.interfaces.OnSneakerDismissListener;
+import com.irozon.sneaker.widget.RoundedImageView;
 
 import java.lang.ref.WeakReference;
 
@@ -45,6 +50,8 @@ public class Sneaker implements View.OnClickListener {
     private static OnSneakerClickListener mListener = null;
     private static OnSneakerDismissListener mDismissListener = null;
     private static Typeface mTypeFace = null;
+    private static int mCornerRadius = DEFAULT_VALUE;
+    private static int mMargin = DEFAULT_VALUE;
 
     /**
      * Constructor
@@ -110,6 +117,8 @@ public class Sneaker implements View.OnClickListener {
         mIsCircular = false;
         mListener = null;
         mTypeFace = null;
+        mCornerRadius = DEFAULT_VALUE;
+        mMargin = DEFAULT_VALUE;
     }
 
     /**
@@ -323,6 +332,28 @@ public class Sneaker implements View.OnClickListener {
     }
 
     /**
+     * Sets the corner radius for round corner sneaker.
+     *
+     * @param radius Corner radius.
+     */
+    public Sneaker setCornerRadius(int radius) {
+        mCornerRadius = radius;
+        return this;
+    }
+
+    /**
+     * Sets the corner radius for round corner sneaker with margin.
+     *
+     * @param radius Corner radius.
+     * @param margin margin.
+     */
+    public Sneaker setCornerRadius(int radius, int margin) {
+        mCornerRadius = radius;
+        mMargin = margin;
+        return this;
+    }
+
+    /**
      * Disable/Enable auto hiding sneaker
      *
      * @param autoHide
@@ -369,15 +400,15 @@ public class Sneaker implements View.OnClickListener {
 
     /**
      * Sets the dismiss listener to sneaker
-     *
      */
-     public Sneaker setOnSneakerDismissListener(OnSneakerDismissListener listener) {
-         mDismissListener = listener;
-         return this;
-     }
+    public Sneaker setOnSneakerDismissListener(OnSneakerDismissListener listener) {
+        mDismissListener = listener;
+        return this;
+    }
 
     /**
      * Set font for title and message
+     *
      * @param typeface
      * @return
      */
@@ -458,27 +489,37 @@ public class Sneaker implements View.OnClickListener {
         LinearLayout layout = new LinearLayout(getContext());
         layoutWeakReference = new WeakReference<>(layout);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mHeight == DEFAULT_VALUE ? (getStatusBarHeight() + convertToDp(56)) : convertToDp(mHeight));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, mHeight == DEFAULT_VALUE ? (Utils.getStatusBarHeight((Activity) getContext()) + Utils.convertToDp(getContext(), 56)) : Utils.convertToDp(getContext(), mHeight));
+        if (mMargin != DEFAULT_VALUE) {
+            layoutParams.setMargins(Utils.convertToDp(getContext(), mMargin),
+                    Utils.convertToDp(getContext(), mMargin),
+                    Utils.convertToDp(getContext(), mMargin),
+                    Utils.convertToDp(getContext(), mMargin)
+            );
+        }
         layout.setLayoutParams(layoutParams);
         layout.setOrientation(LinearLayout.HORIZONTAL);
         layout.setGravity(Gravity.CENTER_VERTICAL);
-        layout.setPadding(46, getStatusBarHeight(), 46, 0);
+        layout.setPadding(46, Utils.getStatusBarHeight((Activity) getContext()), 46, 0);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             layout.setElevation(6);
         }
-
         // Background color
-        layout.setBackgroundColor(mBackgroundColor);
+        if (mCornerRadius == DEFAULT_VALUE) {
+            layout.setBackgroundColor(mBackgroundColor);
+        } else {
+            Utils.customView(getContext(), layout, mBackgroundColor, mCornerRadius);
+        }
 
         // Icon
         // If icon is set
         if (mIcon != DEFAULT_VALUE || mIconDrawable != null) {
             if (!mIsCircular) {
                 AppCompatImageView ivIcon = new AppCompatImageView(getContext());
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(mIconSize), convertToDp(mIconSize));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(Utils.convertToDp(getContext(), mIconSize), Utils.convertToDp(getContext(), mIconSize));
                 ivIcon.setLayoutParams(lp);
 
-                if(mIcon == DEFAULT_VALUE) {
+                if (mIcon == DEFAULT_VALUE) {
                     ivIcon.setImageDrawable(mIconDrawable);
                 } else {
                     ivIcon.setImageResource(mIcon);
@@ -490,10 +531,10 @@ public class Sneaker implements View.OnClickListener {
                 layout.addView(ivIcon);
             } else {
                 RoundedImageView ivIcon = new RoundedImageView(getContext());
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(convertToDp(mIconSize), convertToDp(mIconSize));
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(Utils.convertToDp(getContext(), mIconSize), Utils.convertToDp(getContext(), mIconSize));
                 ivIcon.setLayoutParams(lp);
 
-                if(mIcon == DEFAULT_VALUE) {
+                if (mIcon == DEFAULT_VALUE) {
                     ivIcon.setImageDrawable(mIconDrawable);
                 } else {
                     ivIcon.setImageResource(mIcon);
@@ -557,7 +598,6 @@ public class Sneaker implements View.OnClickListener {
         layout.addView(textLayout);
         layout.setId(R.id.mainLayout);
 
-
         final ViewGroup viewGroup = getActivityDecorView();
         getExistingOverlayInViewAndRemove(viewGroup);
 
@@ -566,15 +606,17 @@ public class Sneaker implements View.OnClickListener {
 
         layout.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_show));
         if (mAutoHide) {
-            Handler handler = new Handler();
+            final Handler handler = new Handler();
             handler.removeCallbacks(null);
-            handler.postDelayed(new Runnable() {
+            Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
                     getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
                     viewGroup.removeView(getLayout());
                 }
-            }, mDuration);
+            };
+
+            handler.postDelayed(runnable, mDuration);
         }
     }
 
@@ -583,7 +625,7 @@ public class Sneaker implements View.OnClickListener {
      *
      * @param parent
      */
-    public void getExistingOverlayInViewAndRemove(ViewGroup parent) {
+    private void getExistingOverlayInViewAndRemove(ViewGroup parent) {
 
         for (int i = 0; i < parent.getChildCount(); i++) {
 
@@ -598,27 +640,6 @@ public class Sneaker implements View.OnClickListener {
     }
 
     /**
-     * Returns status bar height.
-     *
-     * @return
-     */
-    private int getStatusBarHeight() {
-        Rect rectangle = new Rect();
-        Window window = ((Activity) getContext()).getWindow();
-        window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
-        int statusBarHeight = rectangle.top;
-        int contentViewTop = window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
-        int titleBarHeight = contentViewTop - statusBarHeight;
-
-        return statusBarHeight;
-    }
-
-    private int convertToDp(float sizeInDp) {
-        float scale = getContext().getResources().getDisplayMetrics().density;
-        return (int) (sizeInDp * scale + 0.5f);
-    }
-
-    /**
      * Sneaker on click
      *
      * @param view
@@ -630,13 +651,5 @@ public class Sneaker implements View.OnClickListener {
         }
         getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
         getActivityDecorView().removeView(getLayout());
-    }
-
-    public interface OnSneakerClickListener {
-        void onSneakerClick(View view);
-    }
-
-    public interface OnSneakerDismissListener {
-        void onDismiss();
     }
 }
