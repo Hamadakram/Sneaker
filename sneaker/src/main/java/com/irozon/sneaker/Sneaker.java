@@ -611,8 +611,10 @@ public class Sneaker implements View.OnClickListener {
             Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
-                    viewGroup.removeView(getLayout());
+                    if (getLayout() != null && getContext() != null) {
+                        getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
+                        viewGroup.removeView(getLayout());
+                    }
                 }
             };
 
@@ -649,7 +651,9 @@ public class Sneaker implements View.OnClickListener {
         if (mListener != null) {
             mListener.onSneakerClick(view);
         }
-        getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
-        getActivityDecorView().removeView(getLayout());
+        if (getLayout() != null && getContext() != null) {
+            getLayout().startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.popup_hide));
+            getActivityDecorView().removeView(getLayout());
+        }
     }
 }
