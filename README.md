@@ -5,7 +5,7 @@ A lightweight Android library for customizable alerts
 ## Download
 Grab via Gradle:
 ```java
-compile 'com.irozon.sneaker:sneaker:1.0.2'
+compile 'com.irozon.sneaker:sneaker:1.0.3'
 ```
 Or Maven:
 ```java
@@ -67,6 +67,10 @@ Sneaker.with(this)
 - Round corners sneaker support
 - Sneaker dismiss listener
 - Icon from Drawable support
+
+### [1.0.3] - 2018-04-25
+#### Fixed
+- Fixed: Null exception on getLayout()
 
 ## Authors
 
