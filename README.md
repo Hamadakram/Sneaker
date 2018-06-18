@@ -53,24 +53,9 @@ Sneaker.with(this)
         .setMessage("This is the warning message")
         .sneakWarning();
 ```
-## Change Log
 
-### [1.0.1] - 2017-06-02
-#### Added
-- Custom font support.
-
-#### Fixed
-- Bug fixed that was causing crash on pre-Lollipop devices.
-
-### [1.0.2] - 2018-02-26
-#### Added
-- Round corners sneaker support
-- Sneaker dismiss listener
-- Icon from Drawable support
-
-### [1.0.3] - 2018-04-25
-#### Fixed
-- Fixed: Null exception on getLayout()
+## Apps using Sneaker
+If you are using Sneaker in your app and would like to be listed here, please let me know by [email](mailto:hamadakram91@gmail.com) or opening a new issue!
 
 ## Authors
 
