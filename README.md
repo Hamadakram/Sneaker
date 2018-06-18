@@ -7,15 +7,6 @@ Grab via Gradle:
 ```java
 compile 'com.irozon.sneaker:sneaker:1.0.3'
 ```
-Or Maven:
-```java
-<dependency>
-  <groupId>com.irozon.sneaker</groupId>
-  <artifactId>sneaker</artifactId>
-  <version>1.0.2</version>
-  <type>pom</type>
-</dependency>
-``` 
 ## Usage
 #### Custom:
 ```java
