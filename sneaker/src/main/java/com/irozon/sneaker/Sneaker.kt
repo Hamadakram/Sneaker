@@ -458,7 +458,7 @@ class Sneaker(private var context: Context) : View.OnClickListener, LifecycleObs
 
         targetView?.let {
             removeExistingSneakerView(it)
-            it.addView(sneakerView, 0)
+            it.addView(sneakerView)
 
             sneakerView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.popup_show))
             if (mAutoHide) {
