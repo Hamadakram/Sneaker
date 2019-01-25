@@ -1,16 +1,24 @@
-# Sneaker
+# Sneaker v2
 A lightweight Android library for customizable alerts
 
 ![](https://github.com/Hamadakram/Sneaker/blob/master/art/Sneaker.png?raw=true)
 ## Download
 Grab via Gradle:
-```java
-compile 'com.irozon.sneaker:sneaker:1.0.3'
+```kotlin
+implementation 'com.irozon.sneaker:sneaker:2.0.0'
 ```
 ## Usage
+
+In Sneaker 2.0.0 it's possilbe to show sneaker on Activity, Fragment or any ViewGroup
+```kotlin
+ Sneaker.with(activity) // To show Sneaker on Activity
+ Sneaker.with(fragment) // To show Sneaker on Activity
+ Sneaker.with(viewGroup) // To show Sneaker on Activity
+```
+
 #### Custom:
-```java
-Sneaker.with(this)
+```kotlin
+Sneaker.with(actvitiy) // Activity, Fragment or ViewGroup
        .setTitle("Title", R.color.white) // Title and title color
        .setMessage("This is the message.", R.color.white) // Message and message color
        .setDuration(4000) // Time duration to show
@@ -21,30 +29,39 @@ Sneaker.with(this)
        .setOnSneakerClickListener(this) // Click listener for Sneaker
        .setOnSneakerDismissListener(this) // Dismiss listener for Sneaker. - Version 1.0.2
        .setCornerRadius(radius, margin) // Radius and margin for round corner Sneaker. - Version 1.0.2
-       .sneak(R.color.colorAccent); // Sneak with background color
+       .sneak(R.color.colorAccent) // Sneak with background color
 ```
 #### Error:
-```java
- Sneaker.with(this)
+```kotlin
+ Sneaker.with(actvitiy) // Activity, Fragment or ViewGroup
         .setTitle("Error!!")
         .setMessage("This is the error message")
-        .sneakError();
+        .sneakError()
 ```
 #### Success:
-```java
- Sneaker.with(this)
+```kotlin
+ Sneaker.with(actvitiy) // Activity, Fragment or ViewGroup
         .setTitle("Success!!")
         .setMessage("This is the success message")
-        .sneakSuccess();
+        .sneakSuccess()
 ```
 #### Warning:
-```java
- Sneaker.with(this)
+```kotlin
+ Sneaker.with(actvitiy) // Activity, Fragment or ViewGroup
         .setTitle("Warning!!")
         .setMessage("This is the warning message")
-        .sneakWarning();
+        .sneakWarning()
 ```
-
+#### Custom View:
+```kotlin
+ val sneaker = Sneaker.with(actvitiy) // Activity, Fragment or ViewGroup
+ val view = LayoutInflater.from(this).inflate(R.layout.custom_view,  sneaker.getView(), false)
+ // Your custom view code
+ view.findViewById<TextView>(R.id.tvInstall).setOnClickListener{
+       Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
+ }
+ sneaker.sneakCustom(view)
+```
 ## Apps using Sneaker
 If you are using Sneaker in your app and would like to be listed here, please let me know by [email](mailto:hamadakram91@gmail.com) or opening a new issue!
 
