@@ -12,8 +12,8 @@ implementation 'com.irozon.sneaker:sneaker:2.0.0'
 In Sneaker 2.0.0 it's possilbe to show sneaker on Activity, Fragment or any ViewGroup
 ```kotlin
  Sneaker.with(activity) // To show Sneaker on Activity
- Sneaker.with(fragment) // To show Sneaker on Activity
- Sneaker.with(viewGroup) // To show Sneaker on Activity
+ Sneaker.with(fragment) // To show Sneaker on Fragment
+ Sneaker.with(viewGroup) // To show Sneaker on ViewGroup
 ```
 
 #### Custom:
