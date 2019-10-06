@@ -3,4 +3,10 @@
     <string name="show_error">Error</string>
     <string name="show_success">Success</string>
     <string name="show_warning">Warning</string>
+    <string name="activity">Activity</string>
+    <string name="viewgroup">ViewGroup</string>
+    <string name="best_of_2018">Best of 2018</string>
+    <string name="game_of_the_year">Game of the year</string>
+    <string name="textview">TextView</string>
+    <string name="fragment">Fragment</string>
 </resources>
