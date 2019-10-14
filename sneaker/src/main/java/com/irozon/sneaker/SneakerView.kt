@@ -15,7 +15,7 @@ import com.irozon.sneaker.widget.RoundedImageView
 internal class SneakerView(context: Context?) : LinearLayout(context) {
     init {
         id = R.id.mainLayout
-        layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
     private val DEFAULT_VALUE = -100000
@@ -26,7 +26,7 @@ internal class SneakerView(context: Context?) : LinearLayout(context) {
             val ivIcon =
                     if (!isCircular) AppCompatImageView(context)
                     else RoundedImageView(context)
-            ivIcon.layoutParams = LinearLayout.LayoutParams(iconSize, iconSize)
+            ivIcon.layoutParams = LayoutParams(iconSize, iconSize)
             ivIcon.setImageDrawable(it)
             ivIcon.isClickable = false
             if (colorFilter != DEFAULT_VALUE) ivIcon.setColorFilter(colorFilter)
@@ -37,9 +37,9 @@ internal class SneakerView(context: Context?) : LinearLayout(context) {
     fun setTextContent(title: String, titleColor: Int, description: String, messageColor: Int, typeface: Typeface?) {
         // Title and description
         val textLayout = LinearLayout(context)
-        val textLayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val textLayoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         textLayout.layoutParams = textLayoutParams
-        textLayout.orientation = LinearLayout.VERTICAL
+        textLayout.orientation = VERTICAL
 
         // Title
         if (!title.isEmpty()) {
